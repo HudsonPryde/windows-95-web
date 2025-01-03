@@ -15,6 +15,9 @@
 }
 
 .top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background-color: #808080;
   height: 30px;
   width: 100%;
@@ -47,4 +50,12 @@
   bottom: 0;
   right: 0;
   cursor: se-resize;
+}
+
+.close-container {
+  background-color: #f03333;
+  border-radius: 100%;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
 }

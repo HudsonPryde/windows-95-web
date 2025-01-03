@@ -1,12 +1,23 @@
 .shortcut-container {
   cursor: pointer;
-  width: 25px;
-  height: 25px;
-  background-color: aquamarine;
 }
 
 .shortcut-active {
   border-width: 1px;
   border-style: dotted;
-  border-color: #212121;
+  border-color: #ffffff;
+  background-color: rgba(0, 0, 136, 0.651);
+  border-radius: 2px;
+  margin: 0px !important;
+}
+
+.shortcut-title {
+  margin: 1px;
+  font-size: 22px;
+  color: #eeeeee;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  text-shadow: rgba(0,0,0,.01) 0 0 1px;
+  letter-spacing: 0.5px;
 }

@@ -10,6 +10,7 @@ let desktopInit: DesktopData = {
   front: 0,
   windows: [],
   shortcuts: [],
+  activeShortcut: '',
 };
 
 const DesktopContext = createContext(desktopInit);
@@ -18,12 +19,18 @@ const DispatchContext = createContext(null as unknown as React.Dispatch<any>);
 export default function Desktop() {
   const [state, dispatch] = useReducer(desktopReducer, desktopInit);
 
+  function handleClick() {
+    dispatch({
+      type: 'deactivate_shortcut',
+    });
+  }
+
   return (
     <DesktopContext.Provider value={state}>
       <DispatchContext.Provider value={dispatch}>
-        <div className="Desktop">
+        <div className="Desktop" onClick={handleClick}>
           {state.windows.map((w: WindowData) => (
-            <Window key={w.title} title={w.title} zindex={w.zindex} />
+            <Window key={w.title} title={w.title} id={w.id} zindex={w.zindex} />
           ))}
           <Shortcut title={'Profile'} x={50} y={50} />
         </div>

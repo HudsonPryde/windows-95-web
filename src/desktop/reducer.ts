@@ -15,6 +15,12 @@ export function desktopReducer(state: DesktopData, action: any): any {
         ],
       };
     }
+    case 'delete_window': {
+      return {
+        ...state,
+        windows: state.windows.filter((window) => window.id !== action.data.id),
+      };
+    }
     case 'bring_to_front': {
       return {
         ...state,
@@ -25,6 +31,18 @@ export function desktopReducer(state: DesktopData, action: any): any {
           }
           return w;
         }),
+      };
+    }
+    case 'set_active_shortcut': {
+      return {
+        ...state,
+        activeShortcut: action.data.title,
+      };
+    }
+    case 'deactivate_shortcut': {
+      return {
+        ...state,
+        activeShortcut: '',
       };
     }
   }

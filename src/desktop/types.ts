@@ -4,4 +4,5 @@ export interface DesktopData {
   front: number; // keeps track of the zindex required to pull window to front
   windows: WindowData[];
   shortcuts: Object[];
+  activeShortcut: string;
 }

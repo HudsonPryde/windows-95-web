@@ -1,7 +1,8 @@
 import './Shortcut.css';
-import { useState } from 'react';
 import { useDesktopDispatch, useDesktop } from '../desktop/Desktop';
 import { WindowData } from '../window/types';
+import profile from '../icons/profile.png';
+import shortcutLink from '../icons/shortcut-link.png';
 
 export default function Shortcut({
   title,
@@ -14,14 +15,17 @@ export default function Shortcut({
 }) {
   const state = useDesktop();
   const dispatch = useDesktopDispatch();
-  const [active, setActive] = useState(false);
 
   // handles double click as well
   const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    if (!active) {
-      setActive(true);
+    e.stopPropagation();
+    if (state.activeShortcut !== title) {
+      dispatch({ type: 'set_active_shortcut', data: { title } });
       return;
     }
+    dispatch({
+      type: 'deactivate_shortcut',
+    });
     // we need to open or bring to front the corrosponding window to this shortcut if doubleclicked
     const window = findWindowByTitle(title);
     if (window) {
@@ -51,9 +55,24 @@ export default function Shortcut({
   }
 
   return (
-    <div
-      className={`shortcut-container ${active ? 'shrortcut-active' : null}`}
-      onClick={handleClick}
-    ></div>
+    <div className={`shortcut-container`} onClick={handleClick}>
+      <div className={'img-container'}>
+        <img
+          src={shortcutLink}
+          alt="shortcut"
+          height={32}
+          width={32}
+          style={{ position: 'fixed' }}
+        />
+        <img src={profile} alt="profile" height={32} width={32} />
+      </div>
+      <div
+        className={`shortcut-title ${
+          state.activeShortcut === title ? 'shortcut-active' : null
+        }`}
+      >
+        {title}
+      </div>
+    </div>
   );
 }

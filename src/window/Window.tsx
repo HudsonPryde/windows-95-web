@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import './Window.css';
 import { useDesktopDispatch } from '../desktop/Desktop';
+import Close from './Close';
+import { WindowData } from './types';
 
-export default function Window({
-  title,
-  zindex,
-}: {
-  title: string;
-  zindex: number;
-}) {
+export default function Window({ title, id, zindex }: WindowData) {
   const dispatch = useDesktopDispatch();
   // position
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -103,6 +99,9 @@ export default function Window({
     >
       <div className="top-bar">
         <p className="window-title no-select">{title}</p>
+        <div>
+          <Close id={id} />
+        </div>
       </div>
       <div className="resize-handle" onMouseDown={handleResizeMouseDown}></div>
     </div>
