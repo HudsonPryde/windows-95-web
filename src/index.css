@@ -3,6 +3,7 @@ body {
   font-family: 'w95fa';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
 }
 
 code {

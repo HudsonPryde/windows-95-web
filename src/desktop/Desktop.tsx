@@ -5,6 +5,7 @@ import { WindowData } from '../window/types';
 import { DesktopData } from './types';
 import { desktopReducer } from './reducer';
 import Shortcut from '../shortcut/Shortcut';
+import Taskbar from '../taskbar/Taskbar';
 
 let desktopInit: DesktopData = {
   front: 0,
@@ -34,6 +35,7 @@ export default function Desktop() {
           ))}
           <Shortcut title={'Profile'} x={50} y={50} />
         </div>
+        <Taskbar />
       </DispatchContext.Provider>
     </DesktopContext.Provider>
   );

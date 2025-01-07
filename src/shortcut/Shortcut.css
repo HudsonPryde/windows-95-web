@@ -1,5 +1,6 @@
 .shortcut-container {
   cursor: pointer;
+  margin: 10px;
 }
 
 .shortcut-active {
@@ -13,7 +14,7 @@
 
 .shortcut-title {
   margin: 1px;
-  font-size: 22px;
+  font-size: 16px;
   color: #eeeeee;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
