@@ -25,6 +25,7 @@ export function desktopReducer(state: DesktopData, action: any): any {
       return {
         ...state,
         front: state.front + 1,
+        activeWindow: action.data.id,
         windows: state.windows.map((w) => {
           if (w.id === action.data.id) {
             w.zindex = state.front + 1;

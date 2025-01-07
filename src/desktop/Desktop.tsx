@@ -12,6 +12,7 @@ let desktopInit: DesktopData = {
   windows: [],
   shortcuts: [],
   activeShortcut: '',
+  activeWindow: 1,
 };
 
 const DesktopContext = createContext(desktopInit);
@@ -34,6 +35,7 @@ export default function Desktop() {
             <Window key={w.title} title={w.title} id={w.id} zindex={w.zindex} />
           ))}
           <Shortcut title={'Profile'} x={50} y={50} />
+          <Shortcut title={'Resume'} x={50} y={50} />
         </div>
         <Taskbar />
       </DispatchContext.Provider>

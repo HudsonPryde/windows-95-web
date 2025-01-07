@@ -1,6 +1,8 @@
 .shortcut-container {
   cursor: pointer;
   margin: 10px;
+  width: 50px;
+  height: 50px;
 }
 
 .shortcut-active {

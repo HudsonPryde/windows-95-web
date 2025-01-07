@@ -5,4 +5,5 @@ export interface DesktopData {
   windows: WindowData[];
   shortcuts: Object[];
   activeShortcut: string;
+  activeWindow: number;
 }

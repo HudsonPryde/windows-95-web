@@ -1,5 +1,4 @@
 import { useDesktop, useDesktopDispatch } from '../desktop/Desktop';
-import Container from '../shared/Container';
 import WindowsStart from '../icons/windows.png';
 import moment from 'moment';
 import './Taskbar.css';
@@ -14,19 +13,33 @@ export default function Taskbar() {
     setCurrentTime(moment().format('hh:mm A'));
   }, 1000);
 
+  function handleTabClick(windowId: number) {
+    dispatch({
+      type: 'bring_to_front',
+      data: {
+        id: windowId,
+      },
+    });
+  }
+
   return (
     <div className="task-bar-container">
-      <Container clickable>
+      <div className="windows-container">
         <div className="start-button">
           <img src={WindowsStart} alt="start" />
           <div className="start-title">Start</div>
         </div>
-      </Container>
+      </div>
       {state.windows.map((window) => {
         return (
-          <Container clickable>
-            <div className="window-tab">{window.title}</div>
-          </Container>
+          <div
+            className={` windows-container window-tab ${
+              state.activeWindow === window.id ? 'active' : null
+            }`}
+            onClick={() => handleTabClick(window.id)}
+          >
+            {window.title}
+          </div>
         );
       })}
       <div className="clock-container">{currentTime}</div>

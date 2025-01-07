@@ -22,7 +22,7 @@ export default function Window({ title, id, zindex }: WindowData) {
     dispatch({
       type: 'bring_to_front',
       data: {
-        title,
+        id,
       },
     });
     setIsDragging(true);
