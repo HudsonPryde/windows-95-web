@@ -8,8 +8,8 @@
   border-width: 3px;
   border-top-color: rgb(236, 236, 236);
   border-left-color: rgb(236, 236, 236);
-  border-right-color: #494949;
-  border-bottom-color: #494949;
+  border-right-color: #747474;
+  border-bottom-color: #747474;
   border-style: solid;
   padding: 3px;
 }
@@ -21,6 +21,12 @@
   background-color: #808080;
   height: 30px;
   width: 100%;
+  color: #c4c4c4;
+}
+
+.top-bar.active {
+  background-color: rgba(0, 0, 136, 0.651);
+  color: #f1f1f1;
 }
 
 .window-title {
@@ -28,8 +34,6 @@
   font-size: 22px;
   margin: 0px;
   padding-left: 5px;
-  padding-top: 2px;
-  color: #c4c4c4;
 }
 
 .no-select {
@@ -46,16 +50,28 @@
   position: absolute;
   width: 10px;
   height: 10px;
-  background-color: #333;
+  background-color: #c4c4c4;
   bottom: 0;
   right: 0;
   cursor: se-resize;
 }
 
-.close-container {
-  background-color: #f03333;
-  border-radius: 100%;
-  width: 15px;
-  height: 15px;
+.window-functions {
+  display: flex;
+  flex-direction: row;
+}
+
+.function-container {
+  display: flex;
+  background-color: #c4c4c4;
+  justify-content: center;
+  align-items: center;
+  margin: 3px;
   cursor: pointer;
+  border-width: 2px;
+  border-top-color: rgb(236, 236, 236);
+  border-left-color: rgb(236, 236, 236);
+  border-right-color: #747474;
+  border-bottom-color: #747474;
+  border-style: solid;
 }

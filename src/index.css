@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: 'w95fa';
+  font-family: 'ari95';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
@@ -12,8 +12,8 @@ body {
   border-width: 3px;
   border-top-color: rgb(236, 236, 236);
   border-left-color: rgb(236, 236, 236);
-  border-right-color: #494949;
-  border-bottom-color: #494949;
+  border-right-color: #747474;
+  border-bottom-color: #747474;
   border-style: solid;
   padding: 3px;
   margin: 3px;
@@ -27,4 +27,15 @@ code {
 @font-face {
   font-family: 'w95fa';
   src: url(./fonts/w95fa.woff);
+}
+
+@font-face {
+  font-family: 'ari95';
+  src: url(./fonts/ari-w9500.ttf);
+}
+
+@font-face {
+  font-family: 'ari95';
+  src: url(./fonts/ari-w9500-bold.ttf);
+  font-weight: bold;
 }

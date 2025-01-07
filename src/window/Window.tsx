@@ -1,13 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import './Window.css';
-import { useDesktopDispatch } from '../desktop/Desktop';
+import { useDesktop, useDesktopDispatch } from '../desktop/Desktop';
 import Close from './Close';
 import { WindowData } from './types';
+import Minimize from './Minimize';
+import Fullscreen from './Fullscreen';
 
-export default function Window({ title, id, zindex }: WindowData) {
+const windowWidth = window.innerWidth;
+const windowHeight = window.innerHeight;
+
+export default function Window({ title, id, zindex, visible }: WindowData) {
+  const state = useDesktop();
   const dispatch = useDesktopDispatch();
   // position
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [position, setPosition] = useState({
+    x: windowWidth * 0.05,
+    y: windowHeight * 0.05,
+  });
   const [isDragging, setIsDragging] = useState(false);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
 
@@ -15,6 +24,29 @@ export default function Window({ title, id, zindex }: WindowData) {
   const [size, setSize] = useState({ width: 300, height: 300 });
   const [resizeOffset, setResizeOffset] = useState({ width: 0, height: 0 });
   const [isResizing, setIsResizing] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  function handleFullscreen() {
+    // handle resize
+    if (isFullscreen) {
+      setPosition({
+        x: windowWidth * 0.05,
+        y: windowHeight * 0.05,
+      });
+      setSize({ width: 300, height: 300 });
+      setIsFullscreen(false);
+      return;
+    }
+    setPosition({ x: 0, y: 0 });
+    setOffset({ x: 0, y: 0 });
+    // fullscreen size is page width - window border+padding (6px) x2 (for both sides)
+    // height is page height - taskbar height (5vh) - border+padding
+    setSize({
+      width: windowWidth - 12,
+      height: windowHeight * 0.95 - 12,
+    });
+    setIsFullscreen(true);
+  }
 
   // set window position on mouse down
   const handleMouseDown = (e: MouseEvent | React.MouseEvent) => {
@@ -81,12 +113,16 @@ export default function Window({ title, id, zindex }: WindowData) {
     };
   }, [isDragging, isResizing]);
 
+  if (!visible) {
+    return null;
+  }
+
   return (
     <div
       className="container"
-      onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
+      onMouseDown={isFullscreen ? () => {} : handleMouseDown}
+      onMouseMove={isFullscreen ? () => {} : handleMouseMove}
+      onMouseUp={isFullscreen ? () => {} : handleMouseUp}
       style={{
         position: 'absolute',
         left: `${position.x}px`,
@@ -97,9 +133,11 @@ export default function Window({ title, id, zindex }: WindowData) {
         zIndex: zindex,
       }}
     >
-      <div className="top-bar">
+      <div className={`top-bar ${state.activeWindow === id ? 'active' : null}`}>
         <p className="window-title no-select">{title}</p>
-        <div>
+        <div className="window-functions">
+          <Minimize id={id} />
+          <Fullscreen onClick={handleFullscreen} isFullscreen={isFullscreen} />
           <Close id={id} />
         </div>
       </div>

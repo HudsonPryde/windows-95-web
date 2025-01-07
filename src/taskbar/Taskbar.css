@@ -14,6 +14,7 @@
   justify-content: center;
   align-items: center;
   gap: 5px;
+  cursor: pointer;
 }
 
 .start-title {
@@ -36,8 +37,9 @@
 .window-tab.active {
   border-bottom-color: rgb(236, 236, 236) !important;
   border-right-color: rgb(236, 236, 236) !important;
-  border-left-color: #494949 !important;
-  border-top-color: #494949 !important;
+  border-left-color: #747474 !important;
+  border-top-color: #747474 !important;
+  background-color: #e2e2e2;
 }
 
 .clock-container {
@@ -47,8 +49,8 @@
   border-width: 2px;
   border-bottom-color: rgb(236, 236, 236);
   border-right-color: rgb(236, 236, 236);
-  border-left-color: #494949;
-  border-top-color: #494949;
+  border-left-color: #747474;
+  border-top-color: #747474;
   border-style: solid;
   padding: 3px;
   margin: 3px;

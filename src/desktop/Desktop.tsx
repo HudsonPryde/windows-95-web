@@ -6,6 +6,8 @@ import { DesktopData } from './types';
 import { desktopReducer } from './reducer';
 import Shortcut from '../shortcut/Shortcut';
 import Taskbar from '../taskbar/Taskbar';
+import Profile from '../icons/profile.png';
+import Resume from '../icons/resume.png';
 
 let desktopInit: DesktopData = {
   front: 0,
@@ -32,10 +34,16 @@ export default function Desktop() {
       <DispatchContext.Provider value={dispatch}>
         <div className="Desktop" onClick={handleClick}>
           {state.windows.map((w: WindowData) => (
-            <Window key={w.title} title={w.title} id={w.id} zindex={w.zindex} />
+            <Window
+              key={w.title}
+              title={w.title}
+              id={w.id}
+              zindex={w.zindex}
+              visible={w.visible}
+            />
           ))}
-          <Shortcut title={'Profile'} x={50} y={50} />
-          <Shortcut title={'Resume'} x={50} y={50} />
+          <Shortcut title={'Profile'} image={Profile} x={50} y={50} />
+          <Shortcut title={'Resume'} image={Resume} x={50} y={50} />
         </div>
         <Taskbar />
       </DispatchContext.Provider>

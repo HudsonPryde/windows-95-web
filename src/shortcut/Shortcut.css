@@ -1,8 +1,9 @@
 .shortcut-container {
   cursor: pointer;
   margin: 10px;
-  width: 50px;
-  height: 50px;
+  width: 75px;
+  height: 75px;
+  user-select: none;
 }
 
 .shortcut-active {
@@ -11,16 +12,14 @@
   border-color: #ffffff;
   background-color: rgba(0, 0, 136, 0.651);
   border-radius: 2px;
-  margin: 0px !important;
+  margin-top: 0px !important;
 }
 
 .shortcut-title {
-  margin: 1px;
+  max-width: fit-content;
+  margin-top: 1px;
+  margin-inline: auto;
   font-size: 16px;
-  color: #eeeeee;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  text-shadow: rgba(0,0,0,.01) 0 0 1px;
+  color: #ffffff;
   letter-spacing: 0.5px;
 }

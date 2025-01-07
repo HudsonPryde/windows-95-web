@@ -1,20 +1,23 @@
 import './Shortcut.css';
 import { useDesktopDispatch, useDesktop } from '../desktop/Desktop';
 import { WindowData } from '../window/types';
-import profile from '../icons/profile.png';
 import shortcutLink from '../icons/shortcut-link.png';
 
 export default function Shortcut({
   title,
   x,
   y,
+  image,
 }: {
   title: string;
   x: number;
   y: number;
+  image: string;
 }) {
   const state = useDesktop();
   const dispatch = useDesktopDispatch();
+
+  let isActive = state.activeShortcut === title ? true : false;
 
   // handles double click as well
   const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -64,13 +67,9 @@ export default function Shortcut({
           width={32}
           style={{ position: 'fixed' }}
         />
-        <img src={profile} alt="profile" height={32} width={32} />
+        <img src={image} alt={image} height={32} width={32} />
       </div>
-      <div
-        className={`shortcut-title ${
-          state.activeShortcut === title ? 'shortcut-active' : null
-        }`}
-      >
+      <div className={`shortcut-title ${isActive ? 'shortcut-active' : null}`}>
         {title}
       </div>
     </div>

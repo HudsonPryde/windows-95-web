@@ -11,6 +11,7 @@ export function desktopReducer(state: DesktopData, action: any): any {
             title: action.data.title,
             zindex: state.front + 1,
             id: state.windows.length + 1,
+            visible: true,
           },
         ],
       };
@@ -29,6 +30,7 @@ export function desktopReducer(state: DesktopData, action: any): any {
         windows: state.windows.map((w) => {
           if (w.id === action.data.id) {
             w.zindex = state.front + 1;
+            w.visible = true;
           }
           return w;
         }),
@@ -44,6 +46,18 @@ export function desktopReducer(state: DesktopData, action: any): any {
       return {
         ...state,
         activeShortcut: '',
+      };
+    }
+    case 'hide_window': {
+      return {
+        ...state,
+        activeWindow: '',
+        windows: state.windows.map((w) => {
+          if (w.id === action.data.id) {
+            w.visible = false;
+          }
+          return w;
+        }),
       };
     }
   }
