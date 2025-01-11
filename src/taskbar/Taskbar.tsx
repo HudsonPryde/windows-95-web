@@ -3,10 +3,13 @@ import WindowsStart from '../icons/windows.png';
 import moment from 'moment';
 import './Taskbar.css';
 import { useState } from 'react';
+import StartMenu from './StartMenu';
 
 export default function Taskbar() {
   const state = useDesktop();
   const dispatch = useDesktopDispatch();
+
+  const [startOpen, setStartOpen] = useState(false);
 
   const [currentTime, setCurrentTime] = useState(moment().format('hh:mm A'));
   setInterval(() => {
@@ -24,12 +27,18 @@ export default function Taskbar() {
 
   return (
     <div className="task-bar-container">
-      <div className="windows-container">
-        <div className="start-button">
+      <button
+        className={`windows-container start-button ${
+          startOpen ? 'active' : ''
+        }`}
+        onClick={() => setStartOpen(!startOpen)}
+      >
+        <div className="start-title">
           <img src={WindowsStart} alt="start" />
-          <div className="start-title">Start</div>
+          Start
         </div>
-      </div>
+      </button>
+      <StartMenu visible={startOpen} />
       {state.windows.map((window) => {
         return (
           <div

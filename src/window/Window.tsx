@@ -9,7 +9,13 @@ import Fullscreen from './Fullscreen';
 const windowWidth = window.innerWidth;
 const windowHeight = window.innerHeight;
 
-export default function Window({ title, id, zindex, visible }: WindowData) {
+export default function Window({
+  children,
+  title,
+  id,
+  zindex,
+  visible,
+}: WindowData) {
   const state = useDesktop();
   const dispatch = useDesktopDispatch();
   // position
@@ -141,6 +147,7 @@ export default function Window({ title, id, zindex, visible }: WindowData) {
           <Close id={id} />
         </div>
       </div>
+      <div className="window-body">{children}</div>
       <div className="resize-handle" onMouseDown={handleResizeMouseDown}></div>
     </div>
   );

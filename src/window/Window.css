@@ -14,6 +14,18 @@
   padding: 3px;
 }
 
+.window-body {
+  margin-top: 3px;
+  display: flex;
+  height: calc(100% - 39px);
+  border-width: 3px;
+  border-bottom-color: rgb(236, 236, 236);
+  border-right-color: rgb(236, 236, 236);
+  border-left-color: #747474;
+  border-top-color: #747474;
+  border-style: solid;
+}
+
 .top-bar {
   display: flex;
   justify-content: space-between;
@@ -50,7 +62,6 @@
   position: absolute;
   width: 10px;
   height: 10px;
-  background-color: #c4c4c4;
   bottom: 0;
   right: 0;
   cursor: se-resize;
