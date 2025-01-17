@@ -5,7 +5,6 @@ import Close from './Close';
 import { WindowData } from './types';
 import Minimize from './Minimize';
 import Fullscreen from './Fullscreen';
-import ProfileIcon from '../icons/profile.png';
 
 export default function Window({
   children,
