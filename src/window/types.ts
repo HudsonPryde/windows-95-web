@@ -6,4 +6,5 @@ export type WindowData = {
   title: string;
   zindex: number;
   visible: boolean;
+  icon?: string;
 };

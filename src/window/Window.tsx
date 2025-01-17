@@ -5,9 +5,7 @@ import Close from './Close';
 import { WindowData } from './types';
 import Minimize from './Minimize';
 import Fullscreen from './Fullscreen';
-
-const windowWidth = window.innerWidth;
-const windowHeight = window.innerHeight;
+import ProfileIcon from '../icons/profile.png';
 
 export default function Window({
   children,
@@ -15,10 +13,13 @@ export default function Window({
   id,
   zindex,
   visible,
+  icon,
 }: WindowData) {
   const state = useDesktop();
   const dispatch = useDesktopDispatch();
   // position
+  const windowWidth = window.innerWidth;
+  const windowHeight = window.innerHeight;
   const [position, setPosition] = useState({
     x: windowWidth * 0.05,
     y: windowHeight * 0.05,
@@ -27,7 +28,10 @@ export default function Window({
   const [offset, setOffset] = useState({ x: 0, y: 0 });
 
   // size
-  const [size, setSize] = useState({ width: 300, height: 300 });
+  const [size, setSize] = useState({
+    width: windowWidth * 0.3,
+    height: windowHeight * 0.6,
+  });
   const [resizeOffset, setResizeOffset] = useState({ width: 0, height: 0 });
   const [isResizing, setIsResizing] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -39,7 +43,7 @@ export default function Window({
         x: windowWidth * 0.05,
         y: windowHeight * 0.05,
       });
-      setSize({ width: 300, height: 300 });
+      setSize({ width: windowWidth * 0.3, height: windowHeight * 0.6 });
       setIsFullscreen(false);
       return;
     }
@@ -126,9 +130,6 @@ export default function Window({
   return (
     <div
       className="container"
-      onMouseDown={isFullscreen ? () => {} : handleMouseDown}
-      onMouseMove={isFullscreen ? () => {} : handleMouseMove}
-      onMouseUp={isFullscreen ? () => {} : handleMouseUp}
       style={{
         position: 'absolute',
         left: `${position.x}px`,
@@ -139,8 +140,16 @@ export default function Window({
         zIndex: zindex,
       }}
     >
-      <div className={`top-bar ${state.activeWindow === id ? 'active' : null}`}>
-        <p className="window-title no-select">{title}</p>
+      <div
+        onMouseDown={isFullscreen ? () => {} : handleMouseDown}
+        onMouseMove={isFullscreen ? () => {} : handleMouseMove}
+        onMouseUp={isFullscreen ? () => {} : handleMouseUp}
+        className={`top-bar ${state.activeWindow === id ? 'active' : null}`}
+      >
+        <div className="window-title">
+          {icon ? <img src={icon} alt="icon" height={24} width={24} /> : null}
+          <p className="no-select">{title}</p>
+        </div>
         <div className="window-functions">
           <Minimize id={id} />
           <Fullscreen onClick={handleFullscreen} isFullscreen={isFullscreen} />

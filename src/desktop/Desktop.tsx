@@ -12,6 +12,7 @@ import ProjectsIcon from '../icons/projects.png';
 import GithubIcon from '../icons/github-mark.png';
 import LinkedInIcon from '../icons/In-Blue-128.png';
 import Resume from '../content/resume/Resume';
+import Profile from '../content/profile/Profile';
 
 let desktopInit: DesktopData = {
   front: 0,
@@ -33,6 +34,28 @@ export default function Desktop() {
     });
   }
 
+  function getContent(title: string): JSX.Element {
+    switch (title) {
+      case 'Resume':
+        return <Resume />;
+      case 'Profile':
+        return <Profile />;
+      default:
+        return <div></div>;
+    }
+  }
+
+  function getIcon(title: string): string {
+    switch (title) {
+      case 'Resume':
+        return ResumeIcon;
+      case 'Profile':
+        return ProfileIcon;
+      default:
+        return '';
+    }
+  }
+
   return (
     <DesktopContext.Provider value={state}>
       <DispatchContext.Provider value={dispatch}>
@@ -44,15 +67,26 @@ export default function Desktop() {
               id={w.id}
               zindex={w.zindex}
               visible={w.visible}
+              icon={getIcon(w.title)}
             >
-              {w.title === 'Resume' ? <Resume /> : <div />}
+              {getContent(w.title)}
             </Window>
           ))}
-          <Shortcut title={'Profile'} image={ProfileIcon} x={50} y={50} />
-          <Shortcut title={'Resume'} image={ResumeIcon} x={50} y={50} />
-          <Shortcut title={'Projects'} image={ProjectsIcon} x={50} y={50} />
-          <Shortcut title={'Github'} image={GithubIcon} x={50} y={50} />
-          <Shortcut title={'LinkedIn'} image={LinkedInIcon} x={50} y={50} />
+          <Shortcut title={'Profile'} image={ProfileIcon} />
+          <Shortcut title={'Resume'} image={ResumeIcon} />
+          <Shortcut title={'Projects'} image={ProjectsIcon} />
+          <Shortcut
+            title={'Github'}
+            image={GithubIcon}
+            isLink={true}
+            link={'https://github.com/hudsonpryde'}
+          />
+          <Shortcut
+            title={'LinkedIn'}
+            image={LinkedInIcon}
+            isLink={true}
+            link={'https://linkedin.com/in/hudsonpryde'}
+          />
         </div>
         <Taskbar />
       </DispatchContext.Provider>

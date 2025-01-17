@@ -2,18 +2,14 @@ import './Shortcut.css';
 import { useDesktopDispatch, useDesktop } from '../desktop/Desktop';
 import { WindowData } from '../window/types';
 import shortcutLink from '../icons/shortcut-link.png';
+import { ShortcutProps } from './types';
 
 export default function Shortcut({
   title,
-  x,
-  y,
   image,
-}: {
-  title: string;
-  x: number;
-  y: number;
-  image: string;
-}) {
+  isLink = false,
+  link,
+}: ShortcutProps) {
   const state = useDesktop();
   const dispatch = useDesktopDispatch();
 
@@ -29,13 +25,18 @@ export default function Shortcut({
     dispatch({
       type: 'deactivate_shortcut',
     });
+    // if this shortcut is a link open the given link in a new tab
+    if (isLink) {
+      window.open(link, '_blank')?.focus();
+      return;
+    }
     // we need to open or bring to front the corrosponding window to this shortcut if doubleclicked
-    const window = findWindowByTitle(title);
-    if (window) {
+    const windowElement = findWindowByTitle(title);
+    if (windowElement) {
       dispatch({
         type: 'bring_to_front',
         data: {
-          id: window.id,
+          id: windowElement.id,
         },
       });
       return;

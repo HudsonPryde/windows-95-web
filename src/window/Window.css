@@ -1,10 +1,8 @@
 .container {
   position: absolute;
   background-color: #c4c4c4;
-  min-height: 150px;
-  min-width: 150px;
-  height: 300px;
-  width: 300px;
+  min-height: min-content;
+  min-width: min-content;
   border-width: 3px;
   border-top-color: rgb(236, 236, 236);
   border-left-color: rgb(236, 236, 236);
@@ -12,6 +10,7 @@
   border-bottom-color: #747474;
   border-style: solid;
   padding: 3px;
+  
 }
 
 .window-body {
@@ -24,6 +23,7 @@
   border-left-color: #747474;
   border-top-color: #747474;
   border-style: solid;
+  overflow-y: scroll;
 }
 
 .top-bar {
@@ -42,6 +42,10 @@
 }
 
 .window-title {
+  display: flex;
+  justify-content: row;
+  align-items: center;
+  gap: 5px;
   text-align: left;
   font-size: 22px;
   margin: 0px;
