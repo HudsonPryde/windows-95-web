@@ -16,7 +16,7 @@
 .window-body {
   margin-top: 3px;
   display: flex;
-  height: calc(100% - 39px);
+  height: calc(100% - 64px);
   border-width: 3px;
   border-bottom-color: rgb(236, 236, 236);
   border-right-color: rgb(236, 236, 236);
@@ -63,11 +63,8 @@
 }
 
 .resize-handle {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  bottom: 0;
-  right: 0;
+  margin-left: auto;
+  justify-self: flex-end;
   cursor: se-resize;
 }
 
@@ -89,4 +86,23 @@
   border-right-color: #747474;
   border-bottom-color: #747474;
   border-style: solid;
+}
+
+.bottom-bar {
+  height: 20px;
+  width: calc(100% - 4px);
+  margin-top: 2px;
+  border-width: 2px;
+  border-bottom-color: rgb(236, 236, 236);
+  border-right-color: rgb(236, 236, 236);
+  border-left-color: #747474;
+  border-top-color: #747474;
+  border-style: solid;
+  
+}
+
+.bottom-bar-body {
+  display: flex;
+  height: 100%;
+  font-size: 0.50em;
 }

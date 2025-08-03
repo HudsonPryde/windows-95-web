@@ -5,6 +5,7 @@ import Close from './Close';
 import { WindowData } from './types';
 import Minimize from './Minimize';
 import Fullscreen from './Fullscreen';
+import ResizeHandleIcon from '../icons/resize-handle.png';
 
 export default function Window({
   children,
@@ -13,6 +14,7 @@ export default function Window({
   zindex,
   visible,
   icon,
+  showBottomBarCount = false,
 }: WindowData) {
   const state = useDesktop();
   const dispatch = useDesktopDispatch();
@@ -70,6 +72,20 @@ export default function Window({
     setOffset({
       x: e.clientX - position.x,
       y: e.clientY - position.y,
+    });
+  };
+  const handleTouchStart = (e: React.TouchEvent) => {
+    const touch = e.touches[0];
+    dispatch({
+      type: 'bring_to_front',
+      data: {
+        id,
+      },
+    });
+    setIsDragging(true);
+    setOffset({
+      x: touch.clientX - position.x,
+      y: touch.clientY - position.y,
     });
   };
 
@@ -143,6 +159,7 @@ export default function Window({
         onMouseDown={isFullscreen ? () => {} : handleMouseDown}
         onMouseMove={isFullscreen ? () => {} : handleMouseMove}
         onMouseUp={isFullscreen ? () => {} : handleMouseUp}
+        //onTouchStart={isFullscreen ? () => {} : handleMouseDown}
         className={`top-bar ${state.activeWindow === id ? 'active' : null}`}
       >
         <div className="window-title">
@@ -156,7 +173,21 @@ export default function Window({
         </div>
       </div>
       <div className="window-body">{children}</div>
-      <div className="resize-handle" onMouseDown={handleResizeMouseDown}></div>
+
+      <div className="bottom-bar">
+        <div className="bottom-bar-body">
+          {showBottomBarCount && '3 object(s)'}
+          <img
+            src={ResizeHandleIcon}
+            onMouseDown={handleResizeMouseDown}
+            className="resize-handle"
+            draggable={false}
+            height={20}
+            width={20}
+            alt="resize handle"
+          />
+        </div>
+      </div>
     </div>
   );
 }

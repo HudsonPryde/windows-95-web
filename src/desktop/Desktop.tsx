@@ -13,6 +13,7 @@ import GithubIcon from '../icons/github-mark.png';
 import LinkedInIcon from '../icons/In-Blue-128.png';
 import Resume from '../content/resume/Resume';
 import Profile from '../content/profile/Profile';
+import Projects from '../content/projects/Projects';
 
 let desktopInit: DesktopData = {
   front: 0,
@@ -40,6 +41,8 @@ export default function Desktop() {
         return <Resume />;
       case 'Profile':
         return <Profile />;
+      case 'Projects':
+        return <Projects />;
       default:
         return <div></div>;
     }
@@ -51,6 +54,8 @@ export default function Desktop() {
         return ResumeIcon;
       case 'Profile':
         return ProfileIcon;
+      case 'Projects':
+        return ProjectsIcon;
       default:
         return '';
     }
@@ -68,6 +73,7 @@ export default function Desktop() {
               zindex={w.zindex}
               visible={w.visible}
               icon={getIcon(w.title)}
+              showBottomBarCount={w.showBottomBarCount}
             >
               {getContent(w.title)}
             </Window>

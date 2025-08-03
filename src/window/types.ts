@@ -7,4 +7,5 @@ export type WindowData = {
   zindex: number;
   visible: boolean;
   icon?: string;
+  showBottomBarCount?: boolean;
 };

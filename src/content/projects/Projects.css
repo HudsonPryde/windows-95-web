@@ -1,0 +1,33 @@
+.projects-container {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  width: 100%;
+  justify-content: start;
+  align-items: start;
+}
+
+.projects-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 0.55em;
+  padding: 0.45em;
+  cursor: pointer;
+  width: 6.5em;
+}
+
+.project-title {
+  max-width: min-content;
+  padding-inline: 0.2em;
+  margin: 0.13em;
+}
+
+.project-title.active {
+  border-width: 0.13em;
+  border-color: black;
+  border-style: dotted;
+  border-radius: 4px;
+  margin: 0em !important;
+}

@@ -12,6 +12,7 @@ export function desktopReducer(state: DesktopData, action: any): any {
             zindex: state.front + 1,
             id: state.windows.length + 1,
             visible: true,
+            showBottomBarCount: action.data.title === 'Projects' ? true : false,
           },
         ],
       };
