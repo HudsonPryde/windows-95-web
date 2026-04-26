@@ -1,26 +1,65 @@
 import { DesktopData } from './types';
+import { WindowData, WindowContentType } from '../window/types';
 
-export function desktopReducer(state: DesktopData, action: any): any {
+function dedupeKey(contentType: WindowContentType, data?: Record<string, any>) {
+  return data ? `${contentType}:${JSON.stringify(data)}` : contentType;
+}
+
+function windowDedupeKey(w: WindowData) {
+  return dedupeKey(w.contentType, w.data);
+}
+
+let nextWindowId = 1;
+
+export function desktopReducer(state: DesktopData, action: any): DesktopData {
   switch (action.type) {
     case 'create_window': {
+      const contentType: WindowContentType = action.data.contentType;
+      const title: string = action.data.title;
+      const data: Record<string, any> | undefined = action.data.data;
+
+      // Dedupe: if a window with the same contentType+data is already open, bring it to front instead.
+      const key = dedupeKey(contentType, data);
+      const existing = state.windows.find((w) => windowDedupeKey(w) === key);
+      if (existing) {
+        return {
+          ...state,
+          front: state.front + 1,
+          activeWindow: existing.id,
+          windows: state.windows.map((w) =>
+            w.id === existing.id
+              ? { ...w, zindex: state.front + 1, visible: true }
+              : w
+          ),
+        };
+      }
+
+      const id = nextWindowId++;
+      const newWindow: WindowData = {
+        title,
+        zindex: state.front + 1,
+        id,
+        visible: true,
+        showBottomBarCount: contentType === 'projects',
+        contentType,
+        data,
+      };
       return {
         ...state,
-        windows: [
-          ...state.windows,
-          {
-            title: action.data.title,
-            zindex: state.front + 1,
-            id: state.windows.length + 1,
-            visible: true,
-            showBottomBarCount: action.data.title === 'Projects' ? true : false,
-          },
-        ],
+        front: state.front + 1,
+        activeWindow: id,
+        windows: [...state.windows, newWindow],
       };
     }
     case 'delete_window': {
+      const remainingWindows = state.windows.filter(
+        (window) => window.id !== action.data.id
+      );
       return {
         ...state,
-        windows: state.windows.filter((window) => window.id !== action.data.id),
+        windows: remainingWindows,
+        activeWindow:
+          state.activeWindow === action.data.id ? null : state.activeWindow,
       };
     }
     case 'bring_to_front': {
@@ -28,13 +67,11 @@ export function desktopReducer(state: DesktopData, action: any): any {
         ...state,
         front: state.front + 1,
         activeWindow: action.data.id,
-        windows: state.windows.map((w) => {
-          if (w.id === action.data.id) {
-            w.zindex = state.front + 1;
-            w.visible = true;
-          }
-          return w;
-        }),
+        windows: state.windows.map((w) =>
+          w.id === action.data.id
+            ? { ...w, zindex: state.front + 1, visible: true }
+            : w
+        ),
       };
     }
     case 'set_active_shortcut': {
@@ -52,13 +89,11 @@ export function desktopReducer(state: DesktopData, action: any): any {
     case 'hide_window': {
       return {
         ...state,
-        activeWindow: '',
-        windows: state.windows.map((w) => {
-          if (w.id === action.data.id) {
-            w.visible = false;
-          }
-          return w;
-        }),
+        activeWindow:
+          state.activeWindow === action.data.id ? null : state.activeWindow,
+        windows: state.windows.map((w) =>
+          w.id === action.data.id ? { ...w, visible: false } : w
+        ),
       };
     }
   }

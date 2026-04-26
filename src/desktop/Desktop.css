@@ -7,6 +7,12 @@
   justify-content: start;
   font-size: calc(10px + 2vmin);
   background-color: rgb(35, 133, 139);
+  flex-wrap: wrap;
+}
+
+body.desktop-refreshing .Desktop {
+  filter: brightness(0.85);
+  transition: filter 60ms ease-in-out;
 }
 
 .App-logo {

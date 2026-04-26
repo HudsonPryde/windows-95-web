@@ -1,0 +1,52 @@
+.context-menu {
+  position: fixed;
+  min-width: 180px;
+  background-color: #c4c4c4;
+  border-width: 2px;
+  border-top-color: rgb(236, 236, 236);
+  border-left-color: rgb(236, 236, 236);
+  border-right-color: #747474;
+  border-bottom-color: #747474;
+  border-style: solid;
+  padding: 2px;
+  z-index: 10000;
+  font-size: 14px;
+  user-select: none;
+  font-family: 'ari95', sans-serif;
+}
+
+.context-menu-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 22px 4px 22px;
+  cursor: default;
+  color: #000;
+}
+
+.context-menu-item.bold {
+  font-weight: bold;
+}
+
+.context-menu-item:hover {
+  background-color: #000080;
+  color: #fff;
+}
+
+.context-menu-item.disabled {
+  color: #808080;
+  pointer-events: none;
+}
+
+.context-menu-divider {
+  height: 0;
+  border-top: 1px solid #747474;
+  border-bottom: 1px solid rgb(236, 236, 236);
+  margin: 3px 2px;
+}
+
+.context-menu-arrow {
+  margin-left: 12px;
+  font-size: 12px;
+}

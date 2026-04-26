@@ -1,24 +1,26 @@
 import './Window.css';
-import { useDesktop, useDesktopDispatch } from '../desktop/Desktop';
+import { useDesktopDispatch } from '../desktop/Desktop';
 import MinimizeIcon from '../icons/minimize.png';
 
 export default function Minimize({ id }: { id: number }) {
-  const state = useDesktop();
   const dispatch = useDesktopDispatch();
 
-  function handleClick() {
+  function handleClick(e: React.MouseEvent) {
+    e.stopPropagation();
     dispatch({
       type: 'hide_window',
-      data: {
-        id,
-      },
+      data: { id },
     });
-    console.log(state);
   }
 
   return (
-    <div className="function-container" onClick={handleClick}>
-      <img src={MinimizeIcon} width={16} height={16} alt="close" />
-    </div>
+    <button
+      type="button"
+      className="function-container"
+      onClick={handleClick}
+      aria-label="Minimize window"
+    >
+      <img src={MinimizeIcon} width={16} height={16} alt="" />
+    </button>
   );
 }

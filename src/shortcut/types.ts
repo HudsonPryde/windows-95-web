@@ -1,8 +1,9 @@
+import { WindowContentType } from '../window/types';
+
 export type ShortcutProps = {
   title: string;
-  x?: number;
-  y?: number;
   image: string;
   isLink?: boolean;
   link?: string;
+  contentType?: WindowContentType;
 };

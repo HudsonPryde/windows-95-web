@@ -12,35 +12,60 @@ export default function Profile() {
         />
 
         <div className="profile-welcome">
-          Welcome!
-          <br />
-          Feel free to close this window and checkout
-          <br /> what else I've linked on the desktop.
-          <br />
-          <br /> Keep reading to learn a bit about me :)
+          <p className="profile-welcome-line">Welcome!</p>
+          <p className="profile-welcome-sub">
+            Feel free to close this window and explore the rest of the desktop.
+          </p>
+          <p className="profile-welcome-sub">Or keep reading to learn a bit about me. :)</p>
         </div>
       </div>
+
       <div className="profile-text">
-        <p className="profile-about-me">
-          Hey, I'm Hudson. It's nice to meet you! I'm a software engineer based
-          in Toronto, Ontario. Most of my experience is in Fullstack
-          development, but my interests also lie in interpreters, machine
-          learning, data mining, and game development. I'm passionate about
-          creating software with a positive social impact, like my app Study
-          Scribe, which helps students with difficulty reading keep-up with
-          their course readings and study effectively. I'm currently working on
-          my next large-scale customer-facing project which aims to help local
-          retailers compete with retail-chains for customer attraction and
-          retention. This drive to have an impact is also why I chose two
-          social-oriented startups to intern at. As an early career
-          self-starter, the fast-paced energy of a startup was exactly what I
-          was looking for, along with the reality that on such a tight dev team
-          you have to make use of every resource so interns can quickly be
-          counted as full team members if they prove their skill and drive. This
-          enabled me to take ownership of many customer-facing features, updates
-          to infrastructure, and guidance for new team members. These
-          experiences have let me level up as a developer many times over and
-          facilitated my ability to build high-level production-grade software.
+        <h2 className="profile-section-heading">About me</h2>
+
+        <p className="profile-paragraph">
+          Hey, I'm <strong>Hudson</strong> — a software engineer based in{' '}
+          <strong>Toronto, Ontario</strong>. Most of my experience is in{' '}
+          <strong>fullstack development</strong>, but I also spend time in:
+        </p>
+
+        <ul className="profile-list">
+          <li>Interpreters and language design</li>
+          <li>Machine learning</li>
+          <li>Data mining</li>
+          <li>Game development</li>
+        </ul>
+
+        <h2 className="profile-section-heading">What I'm working on</h2>
+
+        <p className="profile-paragraph">
+          I'm passionate about building software with a positive social impact.
+          One example is my app{' '}
+          <strong>Study Scribe</strong> — it helps students who struggle with
+          reading keep up with their course material and study effectively.
+        </p>
+
+        <p className="profile-paragraph">
+          Right now I'm building my next large-scale customer-facing project,
+          aimed at helping <strong>local retailers compete with chains</strong>{' '}
+          for customer attraction and retention.
+        </p>
+
+        <h2 className="profile-section-heading">Where I've been</h2>
+
+        <p className="profile-paragraph">
+          That same drive to have an impact is why I chose to intern at two
+          social-oriented startups. As an early-career self-starter, the
+          fast-paced energy of a startup was exactly what I was looking for —
+          and on a small dev team, an intern who proves their skill and drive
+          quickly gets counted as a full team member.
+        </p>
+
+        <p className="profile-paragraph">
+          That gave me ownership of customer-facing features, infrastructure
+          updates, and onboarding for new teammates. Those experiences leveled
+          me up many times over and built my ability to ship high-quality,
+          production-grade software.
         </p>
       </div>
     </div>

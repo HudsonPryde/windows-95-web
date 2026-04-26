@@ -6,17 +6,25 @@ export default function Fullscreen({
   onClick,
   isFullscreen,
 }: {
-  onClick: Function;
+  onClick: () => void;
   isFullscreen: boolean;
 }) {
   return (
-    <div className="function-container" onClick={() => onClick()}>
+    <button
+      type="button"
+      className="function-container"
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick();
+      }}
+      aria-label={isFullscreen ? 'Restore window' : 'Maximize window'}
+    >
       <img
         src={isFullscreen ? ResizeIcon : MaximizeIcon}
         width={16}
         height={16}
-        alt="close"
+        alt=""
       />
-    </div>
+    </button>
   );
 }

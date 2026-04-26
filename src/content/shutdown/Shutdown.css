@@ -1,0 +1,43 @@
+.shutdown-screen {
+  position: fixed;
+  inset: 0;
+  background-color: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 100000;
+  cursor: pointer;
+  font-family: 'ari95', sans-serif;
+}
+
+.shutdown-text {
+  color: #ffa500;
+  font-size: 28px;
+  letter-spacing: 1px;
+  text-align: center;
+  padding: 0 20px;
+}
+
+.shutdown-restart {
+  margin-top: 32px;
+  background-color: #c4c4c4;
+  color: #000;
+  border-width: 2px;
+  border-top-color: rgb(236, 236, 236);
+  border-left-color: rgb(236, 236, 236);
+  border-right-color: #747474;
+  border-bottom-color: #747474;
+  border-style: solid;
+  padding: 6px 24px;
+  font-family: 'ari95', sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.shutdown-restart:active {
+  border-top-color: #747474;
+  border-left-color: #747474;
+  border-right-color: rgb(236, 236, 236);
+  border-bottom-color: rgb(236, 236, 236);
+}

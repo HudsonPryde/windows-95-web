@@ -2,47 +2,56 @@ import './Projects.css';
 import SSIcon from '../../icons/ss-icon.png';
 import ProgramIcon from '../../icons/Office progam.png';
 import { useState } from 'react';
+import { useDesktopDispatch } from '../../desktop/Desktop';
+
+type Entry = { title: string; key: string };
+
+const projectList: Entry[] = [
+  { title: 'Study Scribe', key: 'study-scribe' },
+  { title: 'AI GitHub Task Manager', key: 'github-task-manager' },
+  { title: 'Research Assistant', key: 'research-assistant' },
+  { title: 'Pollyfill', key: 'pollyfill' },
+];
+
+function getProjectIcon(title: string) {
+  switch (title) {
+    case 'Study Scribe':
+      return SSIcon;
+    default:
+      return ProgramIcon;
+  }
+}
 
 export default function Projects() {
   const [activeItem, setActiveItem] = useState('');
-  const projectList = ['Study Scribe', 'Research Assistant', 'Pollyfill'];
+  const dispatch = useDesktopDispatch();
 
-  function getProjectIcon(title: string) {
-    switch (title) {
-      case 'Study Scribe':
-        return SSIcon;
-      default:
-        return ProgramIcon;
-    }
-  }
-
-  function getProjectLink(title: string) {
-    switch (title) {
-      case 'Study Scribe':
-        return 'https://github.com/HudsonPryde/ss-app';
-      case 'Research Assistant':
-        return 'https://github.com/HudsonPryde/research-assistant';
-      case 'Pollyfill':
-        return 'https://github.com/HudsonPryde/Pollyfill';
-      default:
-        return '';
-    }
+  function openProject(entry: Entry) {
+    dispatch({
+      type: 'create_window',
+      data: {
+        title: entry.title,
+        contentType: 'project-detail',
+        data: { projectKey: entry.key, icon: getProjectIcon(entry.title) },
+      },
+    });
   }
 
   return (
     <div className="projects-container" onClick={() => setActiveItem('')}>
       {projectList.map((project) => (
         <div
+          key={project.key}
           onClick={(e) => {
-            setActiveItem(project);
+            setActiveItem(project.title);
             e.stopPropagation();
           }}
+          onDoubleClick={() => openProject(project)}
         >
           <ProjectItem
-            title={project}
-            icon={getProjectIcon(project)}
-            link={getProjectLink(project)}
-            active={project === activeItem}
+            title={project.title}
+            icon={getProjectIcon(project.title)}
+            active={project.title === activeItem}
           />
         </div>
       ))}
@@ -54,23 +63,15 @@ function ProjectItem({
   title,
   icon,
   active,
-  link,
 }: {
   title: string;
   icon: string;
   active: boolean;
-  link: string;
 }) {
-  function openLink() {
-    if (link !== '') {
-      window.open(link, '_blank')?.focus();
-      return;
-    }
-  }
   return (
-    <div className="projects-item" onDoubleClick={openLink}>
+    <div className="projects-item">
       <div className="project-icon">
-        <img src={icon} height={36} width={36} alt="study scribe"></img>
+        <img src={icon} height={36} width={36} alt={title} />
       </div>
       <div className={`project-title ${active ? 'active' : ''}`}>{title}</div>
     </div>

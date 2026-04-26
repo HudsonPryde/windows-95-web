@@ -10,7 +10,21 @@
   border-bottom-color: #747474;
   border-style: solid;
   padding: 3px;
-  
+}
+
+.container:focus {
+  outline: none;
+}
+
+.container.mobile-fullscreen {
+  position: fixed !important;
+  inset: 0 !important;
+  left: 0 !important;
+  top: 0 !important;
+  width: 100vw !important;
+  height: calc(100vh - 5vh) !important;
+  border-width: 0 !important;
+  padding: 2px !important;
 }
 
 .window-body {
@@ -23,7 +37,8 @@
   border-left-color: #747474;
   border-top-color: #747474;
   border-style: solid;
-  overflow-y: scroll;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .top-bar {
@@ -37,29 +52,36 @@
 }
 
 .top-bar.active {
-  background-color: rgba(0, 0, 136, 0.651);
+  background-color: rgba(0, 0, 136, 0.85);
   color: #f1f1f1;
 }
 
 .window-title {
   display: flex;
-  justify-content: row;
+  flex-direction: row;
   align-items: center;
   gap: 5px;
   text-align: left;
   font-size: 22px;
-  margin: 0px;
+  margin: 0;
   padding-left: 5px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.window-title p {
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .no-select {
-    -webkit-touch-callout: none; /* iOS Safari */
-      -webkit-user-select: none; /* Safari */
-       -khtml-user-select: none; /* Konqueror HTML */
-         -moz-user-select: none; /* Old versions of Firefox */
-          -ms-user-select: none; /* Internet Explorer/Edge */
-              user-select: none; /* Non-prefixed version, currently
-                                    supported by Chrome, Edge, Opera and Firefox */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .resize-handle {
@@ -71,6 +93,7 @@
 .window-functions {
   display: flex;
   flex-direction: row;
+  flex-shrink: 0;
 }
 
 .function-container {
@@ -86,6 +109,23 @@
   border-right-color: #747474;
   border-bottom-color: #747474;
   border-style: solid;
+  padding: 0;
+  min-width: 24px;
+  min-height: 24px;
+  font: inherit;
+  color: inherit;
+}
+
+.function-container:active {
+  border-top-color: #747474;
+  border-left-color: #747474;
+  border-right-color: rgb(236, 236, 236);
+  border-bottom-color: rgb(236, 236, 236);
+}
+
+.function-container:focus-visible {
+  outline: 2px solid #ffd34d;
+  outline-offset: 1px;
 }
 
 .bottom-bar {
@@ -98,11 +138,27 @@
   border-left-color: #747474;
   border-top-color: #747474;
   border-style: solid;
-  
 }
 
 .bottom-bar-body {
   display: flex;
   height: 100%;
-  font-size: 0.50em;
+  font-size: 0.5em;
+  align-items: center;
+}
+
+@media (max-width: 640px) {
+  .container.mobile-fullscreen .top-bar {
+    height: 36px;
+  }
+  .container.mobile-fullscreen .window-title {
+    font-size: 18px;
+  }
+  .container.mobile-fullscreen .function-container {
+    min-width: 32px;
+    min-height: 32px;
+  }
+  .container.mobile-fullscreen .window-body {
+    height: calc(100% - 70px);
+  }
 }
