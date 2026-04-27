@@ -1,4 +1,4 @@
-import { RefObject, useState } from 'react';
+import { RefObject, useEffect, useRef, useState } from 'react';
 import { useDesktopDispatch, useShutdown } from '../desktop/Desktop';
 import { WindowContentType } from '../window/types';
 
@@ -23,11 +23,22 @@ export default function StartMenu({
   const dispatch = useDesktopDispatch();
   const { shutdown } = useShutdown();
   const [confirmShutdown, setConfirmShutdown] = useState(false);
+  const [openSubmenu, setOpenSubmenu] = useState<number | null>(null);
+  const firstItemRef = useRef<HTMLButtonElement>(null);
 
   function open(title: string, contentType: WindowContentType) {
     dispatch({ type: 'create_window', data: { title, contentType } });
     onClose();
   }
+
+  // Focus the first item when the menu opens, so keyboard users land inside it.
+  useEffect(() => {
+    if (visible) {
+      requestAnimationFrame(() => firstItemRef.current?.focus());
+    } else {
+      setOpenSubmenu(null);
+    }
+  }, [visible]);
 
   const items: Item[] = [
     {
@@ -64,6 +75,8 @@ export default function StartMenu({
       <div
         ref={menuRef}
         className="windows-container start-menu-container"
+        role="menu"
+        aria-label="Start menu"
       >
         <div className="start-menu-title-container">
           <div className="start-menu-title">
@@ -76,19 +89,46 @@ export default function StartMenu({
               return <div key={i} className="start-menu-divider" />;
             }
             const item = it as Exclude<Item, { divider: true }>;
+            const hasSubmenu = !!item.submenu;
+            const submenuOpen = openSubmenu === i;
             return (
               <div
                 key={i}
-                className={`start-menu-item ${
-                  item.submenu ? 'has-submenu' : ''
-                }`}
-                onClick={() => item.onClick?.()}
+                className={`start-menu-item-wrap ${
+                  hasSubmenu ? 'has-submenu' : ''
+                } ${submenuOpen ? 'open' : ''}`}
+                style={{ position: 'relative' }}
               >
-                <span className="start-menu-item-label">{item.label}</span>
-                {item.submenu && <span className="start-menu-arrow">▸</span>}
-                {item.submenu && (
-                  <div className="start-submenu">
-                    {item.submenu.map((sub, si) => {
+                <button
+                  ref={i === 0 ? firstItemRef : undefined}
+                  type="button"
+                  role="menuitem"
+                  aria-haspopup={hasSubmenu ? 'menu' : undefined}
+                  aria-expanded={hasSubmenu ? submenuOpen : undefined}
+                  className={`start-menu-item ${
+                    hasSubmenu ? 'has-submenu' : ''
+                  } ${submenuOpen ? 'open' : ''}`}
+                  onClick={() => {
+                    if (hasSubmenu) {
+                      setOpenSubmenu(submenuOpen ? null : i);
+                    } else {
+                      item.onClick?.();
+                    }
+                  }}
+                  onMouseEnter={() => {
+                    if (hasSubmenu) setOpenSubmenu(i);
+                  }}
+                >
+                  <span className="start-menu-item-label">{item.label}</span>
+                  {hasSubmenu && <span className="start-menu-arrow">▸</span>}
+                </button>
+                {hasSubmenu && (
+                  <div
+                    className={`start-submenu ${submenuOpen ? 'open' : ''}`}
+                    role="menu"
+                    aria-label={item.label}
+                  >
+                    {item.submenu!.map((sub, si) => {
                       if ('divider' in sub && sub.divider) {
                         return (
                           <div key={si} className="start-menu-divider" />
@@ -96,8 +136,10 @@ export default function StartMenu({
                       }
                       const s = sub as Exclude<Item, { divider: true }>;
                       return (
-                        <div
+                        <button
                           key={si}
+                          type="button"
+                          role="menuitem"
                           className="start-menu-item"
                           onClick={(e) => {
                             e.stopPropagation();
@@ -107,7 +149,7 @@ export default function StartMenu({
                           <span className="start-menu-item-label">
                             {s.label}
                           </span>
-                        </div>
+                        </button>
                       );
                     })}
                   </div>
@@ -120,10 +162,10 @@ export default function StartMenu({
       {confirmShutdown && (
         <div
           className="shutdown-modal-backdrop"
-          onMouseDown={(e) => {
-            // Don't let the backdrop click bubble to the start-menu outside-click handler.
-            e.stopPropagation();
-          }}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Shut down confirmation"
+          onMouseDown={(e) => e.stopPropagation()}
         >
           <div className="shutdown-modal">
             <div className="shutdown-modal-title">Shut Down Windows</div>
@@ -132,7 +174,9 @@ export default function StartMenu({
             </div>
             <div className="shutdown-modal-actions">
               <button
+                type="button"
                 className="win95-button"
+                autoFocus
                 onClick={() => {
                   setConfirmShutdown(false);
                   onClose();
@@ -142,6 +186,7 @@ export default function StartMenu({
                 Yes
               </button>
               <button
+                type="button"
                 className="win95-button"
                 onClick={() => setConfirmShutdown(false)}
               >

@@ -56,7 +56,7 @@ export default function Contact() {
       </div>
 
       <p className="contact-note">
-        I'm open to internship and full-time roles. Drop a line — I usually
+        I'm open to full-time roles, especially at startups. Drop a line — I usually
         reply within a day or two.
       </p>
     </div>

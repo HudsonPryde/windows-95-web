@@ -22,7 +22,9 @@
   left: 0 !important;
   top: 0 !important;
   width: 100vw !important;
-  height: calc(100vh - 5vh) !important;
+  /* Fallback for browsers without dvh, then the dynamic viewport minus the taskbar. */
+  height: calc(100vh - 48px) !important;
+  height: calc(100dvh - 48px) !important;
   border-width: 0 !important;
   padding: 2px !important;
 }
